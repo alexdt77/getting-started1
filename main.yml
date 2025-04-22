@@ -37,7 +37,7 @@ jobs:
         name: gettingstarted-${{ github.run_number }}
         image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ secrets.REPOSITORY_NAME }}:v1.0
         dns-name-label: alexapp${{ github.run_number }}
-        location: northeurope
+        location: westeurope
         registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         registry-username: ${{ secrets.REGISTRY_USERNAME }}
         registry-password: ${{ secrets.REGISTRY_PASSWORD }}
