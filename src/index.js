@@ -1,16 +1,3 @@
-const fs = require("fs");
-const path = require("path");
-
-const dirPath = "/mnt/data";
-const filePath = path.join(dirPath, "test.txt");
-
-// Zorg dat het pad bestaat
-if (!fs.existsSync(dirPath)) {
-  fs.mkdirSync(dirPath, { recursive: true });
-}
-
-fs.writeFileSync(filePath, "Persistent storage werkt!", { flag: "a" });
-
 
 const express = require('express');
 const app = express();
