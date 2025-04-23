@@ -1,14 +1,3 @@
-const fs = require('fs');
-const path = '/mnt/data/test.txt';
-
-fs.writeFile(path, 'Persistent storage werkt!', (err) => {
-  if (err) {
-    console.error('❌ Kan niet schrijven naar /mnt/data:', err);
-  } else {
-    console.log('✅ test.txt succesvol aangemaakt in /mnt/data');
-  }
-});
-
 const express = require('express');
 const app = express();
 const db = require('./persistence');
