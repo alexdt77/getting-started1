@@ -1,10 +1,7 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const filePath = "/mnt/data/test.txt";
 
-// ... bestaande code
-
-const filePath = path.join('/mnt/data', 'test.txt');
-fs.writeFileSync(filePath, 'Persistent storage werkt!\n', { flag: 'a' });
+fs.writeFileSync(filePath, "Persistent storage werkt!", { flag: "a" });
 
 const express = require('express');
 const app = express();
