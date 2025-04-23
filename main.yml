@@ -41,3 +41,7 @@ jobs:
         registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         registry-username: ${{ secrets.REGISTRY_USERNAME }}
         registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        azure-file-volume-account-name: fontysalexopslag
+        azure-file-volume-account-key: ${{ secrets.STORAGE_ACCOUNT_KEY }}
+        azure-file-volume-share-name: <jouw-share-naam>
+        azure-file-volume-mount-path: /mnt/data
