@@ -45,3 +45,5 @@ jobs:
         azure-file-volume-account-key: ${{ secrets.STORAGE_ACCOUNT_KEY }}
         azure-file-volume-share-name: myshare
         azure-file-volume-mount-path: /mnt/data
+
+# Test persistent storage trigger
