@@ -10,11 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Pre Login via Azure CLI
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
     - name: Checkout GitHub Action
       uses: actions/checkout@v2
 
@@ -23,27 +18,33 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Build and push image
-      uses: docker/build-push-action@v2
+    - name: Docker login
+      uses: azure/docker-login@v1
       with:
-        context: .
-        push: true
-        tags: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ secrets.REPOSITORY_NAME }}:v1.0
+        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+
+    - name: Build and push Docker image
+      run: |
+        docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ secrets.REPOSITORY_NAME }}:${{ github.run_number }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ secrets.REPOSITORY_NAME }}:${{ github.run_number }}
 
     - name: Deploy to Azure Container Instances
       uses: azure/aci-deploy@v1
       with:
         resource-group: ${{ secrets.RESOURCE_GROUP }}
-        name: gettingstarted-${{ github.run_number }}
-        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ secrets.REPOSITORY_NAME }}:v1.0
-        dns-name-label: alexapp${{ github.run_number }}
-        location: westeurope
+        name: getting-started-github
+        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ secrets.REPOSITORY_NAME }}:${{ github.run_number }}
+        dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
+        location: 'westeurope'
+        ports: '3000'
         registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         registry-username: ${{ secrets.REGISTRY_USERNAME }}
         registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+
+        # PERSISTENT STORAGE ⬇️
         azure-file-volume-account-name: fontysalexopslag
         azure-file-volume-account-key: ${{ secrets.STORAGE_ACCOUNT_KEY }}
         azure-file-volume-share-name: myshare
         azure-file-volume-mount-path: /mnt/data
-
-# Test persistent storage trigger
