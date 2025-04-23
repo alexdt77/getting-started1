@@ -34,16 +34,16 @@ jobs:
       uses: azure/aci-deploy@v1
       with:
         resource-group: ${{ secrets.RESOURCE_GROUP }}
-        name: getting-started-github
+        name: getting-started-github  # <- vaste container name
         image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ secrets.REPOSITORY_NAME }}:${{ github.run_number }}
-        dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
+        dns-name-label: getting-started-github  # <- vaste DNS
         location: 'westeurope'
         ports: '3000'
         registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
         registry-username: ${{ secrets.REGISTRY_USERNAME }}
         registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-
-        # PERSISTENT STORAGE ⬇️
+        
+        # Persistent storage (via Azure File Share)
         azure-file-volume-account-name: fontysalexopslag
         azure-file-volume-account-key: ${{ secrets.STORAGE_ACCOUNT_KEY }}
         azure-file-volume-share-name: myshare
